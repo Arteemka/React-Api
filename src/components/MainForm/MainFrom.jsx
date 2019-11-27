@@ -12,7 +12,10 @@ class MainForm extends React.Component {
   };
 
   gettingDate = () => {
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true }, this.getDate);
+  };
+
+  getDate = () => {
     fetch(
       `https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=rent&page=1&place_name=${this.state.text}`
     )
