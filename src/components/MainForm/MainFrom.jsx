@@ -3,12 +3,15 @@ import React from "react";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import Output from "../Output/OutputDate";
+import Modal from "../Modal/Modal";
 
 class MainForm extends React.Component {
   state = {
     text: "",
     list: [],
-    isLoading: false
+    isLoading: false,
+    isModal: false,
+    itemIndex: null
   };
 
   gettingDate = () => {
@@ -33,6 +36,13 @@ class MainForm extends React.Component {
     this.setState({ text: event.target.value });
   };
 
+  toggleModal = id => {
+    this.setState(state => ({
+      isModal: !state.isModal,
+      itemIndex: this.state.list.find((item, index) => index === id)
+    }));
+  };
+
   render() {
     return (
       <>
@@ -45,11 +55,14 @@ class MainForm extends React.Component {
           />
           <Button
             gettingDate={this.gettingDate}
-            findButton="Find"
+            buttonName="Find"
             className="button-find"
           />
         </div>
-        <Output list={this.state.list} />
+        {this.state.isModal && (
+          <Modal onClose={this.toggleModal}>{this.state.itemIndex}</Modal>
+        )}
+        <Output onClick={this.toggleModal} list={this.state.list} />
       </>
     );
   }
