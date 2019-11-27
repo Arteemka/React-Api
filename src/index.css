@@ -111,3 +111,70 @@ code {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
   background-color: #333;
 }
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.item-modal {
+  background-color: #333;
+  margin: auto;
+  padding: 0;
+  width: 600px;
+  display: flex;
+  margin-top: 100px;
+  height: 200px;
+  border-radius: 10px;
+  border-bottom: 3px solid #1b9e48;
+}
+
+.modal_img {
+  margin: 5px 5px 0px 5px;
+  border-radius: 10px;
+  width: 190px;
+  height: 190px;
+}
+
+.item-info-modal-block {
+  padding-left: 10px;
+  flex-grow: 1;
+  background: #333;
+  display: flex;
+  width: 412px;
+  font-family: "Times New Roman", Georgia, Serif;
+  font-size: 17px;
+}
+
+.item-info {
+  flex-basis: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  color: #e85f5f;
+  background-color: #fff;
+}
+
+.close_modal {
+  cursor: pointer;
+  color: #1b9e48;
+  margin-left: 375px;
+  width: 20px;
+  font-size: 20px;
+}
+
+.modal_title,
+.modal_bathroom,
+.modal_bedroom {
+  padding-bottom: 10px;
+  color: #1b9e48;
+  font-size: 17px;
+  padding-left: 10px;
+}
