@@ -63,6 +63,14 @@ class MainForm extends React.Component {
     }));
   };
 
+  deleteItem = id => {
+    this.setState({
+      favoritesItems: this.state.favoritesItems.filter((item, index) => {
+        return index !== id;
+      })
+    });
+  };
+
   render() {
     return (
       <>
@@ -98,6 +106,7 @@ class MainForm extends React.Component {
             <FavoritesItems
               onClose={this.toggleModal}
               items={this.state.favoritesItems}
+              deleteItem={this.deleteItem}
             />
           </Modal>
         )}

@@ -193,21 +193,22 @@ code {
   background-color: #333;
   width: 700px;
   margin: 0 auto;
-  height: auto;
+  height: 500px;
   z-index: 20;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  overflow: auto;
 }
 
 .item_box {
   cursor: pointer;
   background-color: #333;
-  height: 230px;
+  height: 260px;
   width: 180px;
   margin-left: 20px;
   top: 10px;
-  padding: 10px 10px 10px 10px;
+  padding: 0px 10px 10px 10px;
   margin-bottom: 20px;
   transition: all .5s ease-out;
   font-size: 17px;
@@ -223,6 +224,7 @@ code {
 .modal_box__img {
   height: 90px;
   width: 180px;
+  z-index: 25;
 }
 
 #close_modal_box {
@@ -230,7 +232,6 @@ code {
   margin-left: 670px;
   font-size: 25px;
   color: #1b9e48;
-  z-index: 25;
 }
 
 #img_box {
@@ -239,4 +240,10 @@ code {
   margin-left: 20px;
   height: 30px;
   width: 50px;
+}
+
+.modal_box__close {
+  font-size: 25px;
+  color: #1b9e48;
+  margin-left: 170px;
 }
