@@ -2,10 +2,10 @@ import React from "react";
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
-import Output from "../Items/Items";
+import Items from "../Items/Items";
 import Modal from "../Modal/Modal";
-import ToggleItem from "../ToggleItem/ToggleItem";
-import ItemBox from "../ToggleItems/ToggleItems";
+import ToggledItem from "../ToggledItem/ToggledItem";
+import FavoritesItems from "../FavoritesItems/FavoritesItems";
 import box from "../../bask.jpg";
 
 class MainForm extends React.Component {
@@ -87,7 +87,7 @@ class MainForm extends React.Component {
         </div>
         {this.state.isModal && (
           <Modal>
-            <ToggleItem
+            <ToggledItem
               onClose={this.toggleModal}
               item={this.state.itemIndex}
             />
@@ -95,13 +95,13 @@ class MainForm extends React.Component {
         )}
         {this.state.favoritesIsModal && (
           <Modal>
-            <ItemBox
+            <FavoritesItems
               onClose={this.toggleModal}
               items={this.state.favoritesItems}
             />
           </Modal>
         )}
-        <Output
+        <Items
           favorites={this.addedInFovorites}
           onClick={this.toggleModal}
           list={this.state.list}

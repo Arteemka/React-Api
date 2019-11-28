@@ -1,6 +1,6 @@
 import React from "react";
 
-const ToggleItems = props => (
+const FavoritesItems = props => (
   <div className="modal_font">
     <span id="close_modal_box" onClick={props.onClose}>
       &#10007;
@@ -16,4 +16,4 @@ const ToggleItems = props => (
   </div>
 );
 
-export default ToggleItems;
+export default FavoritesItems;

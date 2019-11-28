@@ -1,6 +1,6 @@
 import React from "react";
 
-const ToggleItem = props => (
+const ToggledItem = props => (
   <>
     <div className="item-modal">
       <div className="item_image">
@@ -27,4 +27,4 @@ const ToggleItem = props => (
   </>
 );
 
-export default ToggleItem;
+export default ToggledItem;
