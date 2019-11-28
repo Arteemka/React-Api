@@ -2,10 +2,10 @@ import React from "react";
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
-import Output from "../Output/OutputDate";
+import Output from "../Items/Items";
 import Modal from "../Modal/Modal";
-import ToggleItem from "../toggleItem/ToggleItem";
-import ItemBox from "../itemBox/itemBox";
+import ToggleItem from "../ToggleItem/ToggleItem";
+import ItemBox from "../ToggleItems/ToggleItems";
 import box from "../../bask.jpg";
 
 class MainForm extends React.Component {

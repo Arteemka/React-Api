@@ -1,6 +1,6 @@
 import React from "react";
 
-const ModalBox = props => (
+const ToggleItems = props => (
   <div className="modal_font">
     <span id="close_modal_box" onClick={props.onClose}>
       &#10007;
@@ -16,4 +16,4 @@ const ModalBox = props => (
   </div>
 );
 
-export default ModalBox;
+export default ToggleItems;

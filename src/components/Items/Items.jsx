@@ -1,6 +1,6 @@
 import React from "react";
 
-const Output = props =>
+const Items = props =>
   props.list && (
     <div className="output-date">
       {props.list.map((item, index) => (
@@ -24,4 +24,4 @@ const Output = props =>
     </div>
   );
 
-export default Output;
+export default Items;
