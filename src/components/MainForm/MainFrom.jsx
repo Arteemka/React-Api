@@ -65,9 +65,9 @@ class MainForm extends React.Component {
 
   deleteItem = id => {
     this.setState({
-      favoritesItems: this.state.favoritesItems.filter((item, index) => {
-        return index !== id;
-      })
+      favoritesItems: this.state.favoritesItems.filter(
+        (item, index) => index !== id
+      )
     });
   };
 
