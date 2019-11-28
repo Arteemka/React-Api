@@ -11,7 +11,8 @@ class MainForm extends React.Component {
     list: [],
     isLoading: false,
     isModal: false,
-    itemIndex: null
+    itemIndex: null,
+    favoritesItems: []
   };
 
   gettingDate = () => {
@@ -43,6 +44,17 @@ class MainForm extends React.Component {
     }));
   };
 
+  addedInFovorites = (event, id) => {
+    event.stopPropagation();
+
+    this.setState(state => ({
+      favoritesItems: [
+        ...state.favoritesItems,
+        this.state.list.find((item, index) => index === id)
+      ]
+    }));
+  };
+
   render() {
     return (
       <>
@@ -62,7 +74,11 @@ class MainForm extends React.Component {
         {this.state.isModal && (
           <Modal onClose={this.toggleModal}>{this.state.itemIndex}</Modal>
         )}
-        <Output onClick={this.toggleModal} list={this.state.list} />
+        <Output
+          favorites={this.addedInFovorites}
+          onClick={this.toggleModal}
+          list={this.state.list}
+        />
       </>
     );
   }

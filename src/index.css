@@ -178,3 +178,13 @@ code {
   font-size: 17px;
   padding-left: 10px;
 }
+
+.favorites {
+  position: absolute;
+  font-size: 25px;
+  margin-left: 210px;
+}
+
+.favorites:hover {
+  color: red;
+}
