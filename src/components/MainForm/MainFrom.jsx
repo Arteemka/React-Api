@@ -4,6 +4,9 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import Output from "../Output/OutputDate";
 import Modal from "../Modal/Modal";
+import ToggleItem from "../toggleItem/ToggleItem";
+import ItemBox from "../itemBox/itemBox";
+import box from "../../bask.jpg";
 
 class MainForm extends React.Component {
   state = {
@@ -12,7 +15,8 @@ class MainForm extends React.Component {
     isLoading: false,
     isModal: false,
     itemIndex: null,
-    favoritesItems: []
+    favoritesItems: [],
+    favoritesIsModal: false
   };
 
   gettingDate = () => {
@@ -37,11 +41,15 @@ class MainForm extends React.Component {
     this.setState({ text: event.target.value });
   };
 
-  toggleModal = id => {
-    this.setState(state => ({
-      isModal: !state.isModal,
-      itemIndex: this.state.list.find((item, index) => index === id)
-    }));
+  toggleModal = (event, indexId) => {
+    event.target.id === "img_box" || event.target.id === "close_modal_box"
+      ? this.setState(state => ({
+          favoritesIsModal: !state.favoritesIsModal
+        }))
+      : this.setState(state => ({
+          isModal: !state.isModal,
+          itemIndex: this.state.list.find((item, index) => index === indexId)
+        }));
   };
 
   addedInFovorites = (event, id) => {
@@ -70,9 +78,28 @@ class MainForm extends React.Component {
             buttonName="Find"
             className="button-find"
           />
+          <img
+            onClick={this.toggleModal}
+            id="img_box"
+            src={box}
+            alt="изображение"
+          />
         </div>
         {this.state.isModal && (
-          <Modal onClose={this.toggleModal}>{this.state.itemIndex}</Modal>
+          <Modal>
+            <ToggleItem
+              onClose={this.toggleModal}
+              item={this.state.itemIndex}
+            />
+          </Modal>
+        )}
+        {this.state.favoritesIsModal && (
+          <Modal>
+            <ItemBox
+              onClose={this.toggleModal}
+              items={this.state.favoritesItems}
+            />
+          </Modal>
         )}
         <Output
           favorites={this.addedInFovorites}

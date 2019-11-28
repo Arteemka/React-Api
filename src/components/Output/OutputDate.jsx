@@ -4,7 +4,11 @@ const Output = props =>
   props.list && (
     <div className="output-date">
       {props.list.map((item, index) => (
-        <div key={index} className="item" onClick={() => props.onClick(index)}>
+        <div
+          key={index}
+          className="item"
+          onClick={event => props.onClick(event, index)}
+        >
           <div
             className="favorites"
             onClick={event => props.favorites(event, index)}
