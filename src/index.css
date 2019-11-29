@@ -247,3 +247,15 @@ code {
   color: #1b9e48;
   margin-left: 170px;
 }
+
+.LoadMore {
+  cursor: pointer;
+  padding: 5px;
+  background-color: #333;
+  width: 180px;
+  text-align: center;
+  font-size: 17px;
+  border-bottom: 2px solid #1b9e48;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
