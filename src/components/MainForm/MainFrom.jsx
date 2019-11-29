@@ -16,21 +16,22 @@ class MainForm extends React.Component {
     isModal: false,
     itemIndex: null,
     favoritesItems: [],
-    favoritesIsModal: false
+    favoritesIsModal: false,
+    page: 1
   };
 
   gettingDate = () => {
     this.setState({ isLoading: true }, this.getDate);
   };
 
-  getDate = () => {
+  getDate = page => {
     fetch(
-      `https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=rent&page=1&place_name=${this.state.text}`
+      `https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=rent&page=${page}&place_name=${this.state.text}`
     )
       .then(res => res.json())
       .then(date => {
         this.setState({
-          list: date.response.listings,
+          list: [...this.state.list, ...date.response.listings],
           isLoading: false
         });
       })
@@ -71,9 +72,16 @@ class MainForm extends React.Component {
     });
   };
 
+  upPage = () => {
+    this.setState(
+      prev => ({ page: prev.page + 1 }),
+      () => this.getDate(this.state.page)
+    );
+  };
+
   render() {
     return (
-      <>
+      <div>
         <div className="block_find">
           <Input
             placeholder="Find"
@@ -115,7 +123,10 @@ class MainForm extends React.Component {
           onClick={this.toggleModal}
           list={this.state.list}
         />
-      </>
+        <div className="LoadMore" onClick={this.upPage}>
+          LoadMore
+        </div>
+      </div>
     );
   }
 }
