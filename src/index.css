@@ -21,8 +21,8 @@ code {
 }
 
 .block_find {
-  margin: 20px auto;
-  width: 910px;
+  margin: 20px 450px;
+  width: 1000px;
   margin-bottom: 50px;
 }
 
@@ -31,10 +31,10 @@ code {
   padding: 5px;
   font-size: 17px;
   border-bottom: 2px solid #1b9e48;
-  width: 700px;
+  width: 500px;
 }
 
-.button-find {
+#button-find {
   color: #fff;
   cursor: pointer;
   background: #1b9e48;
@@ -258,4 +258,53 @@ code {
   border-bottom: 2px solid #1b9e48;
   margin: 0 auto;
   margin-bottom: 20px;
+  color: #1b9e48;
+}
+
+.active {
+  color: #1b9e48;
+  background-color: #fff;
+}
+
+li {
+  cursor: pointer;
+  display: inline;
+  color: #1b9e48;
+  background-color: #333;
+  padding: 8px 15px 8px 15px;
+  font-size: 20px;
+  border: 1px solid #1b9e48;
+}
+
+.pagination {
+  margin: 0 550px;
+  margin-bottom: 20px;
+}
+
+#LoadMore-button {
+  cursor: pointer;
+  padding: 5px;
+  background-color: #333;
+  width: 100px;
+  border: none;
+  text-align: center;
+  font-size: 17px;
+  border-bottom: 2px solid #1b9e48;
+  margin-bottom: 20px;
+  color: #1b9e48;
+  margin-left: 80px;
+}
+
+#pagination-button {
+  cursor: pointer;
+  padding: 5px;
+  background-color: #333;
+  width: 100px;
+  border: none;
+  text-align: center;
+  font-size: 17px;
+  border-bottom: 2px solid #1b9e48;
+  margin-bottom: 20px;
+  color: #1b9e48;
+  margin-left: 20px;
 }

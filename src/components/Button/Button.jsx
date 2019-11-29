@@ -1,7 +1,7 @@
 import React from "react";
 
 const Button = props => (
-  <button onClick={props.gettingDate} className={props.className}>
+  <button onClick={props.onClick} id={props.id}>
     {props.buttonName}
   </button>
 );
