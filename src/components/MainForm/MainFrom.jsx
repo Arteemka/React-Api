@@ -20,7 +20,7 @@ class MainForm extends React.Component {
     favoritesIsModal: false,
     page: 1,
     currentPage: 1,
-    endPage: 100,
+    endPage: null,
     pages: [1, 2, 3, 4, 5],
     pagination: false,
     loadMore: false
@@ -46,11 +46,13 @@ class MainForm extends React.Component {
       .then(date => {
         if (this.state.pagination) {
           this.setState({
-            list: date.response.listings
+            list: date.response.listings,
+            endPage: date.response.total_pages
           });
         } else {
           this.setState(prev => ({
-            list: [...prev.list, ...date.response.listings]
+            list: [...prev.list, ...date.response.listings],
+            endPage: date.response.total_pages
           }));
         }
       })
@@ -103,8 +105,20 @@ class MainForm extends React.Component {
 
     if (page < 5) {
       this.setState({ pages: [1, 2, 3, 4, 5] });
+    } else if (page > this.state.endPage) {
+      this.setState({
+        pages: [
+          this.state.endPage - 4,
+          this.state.endPage - 3,
+          this.state.endPage - 2,
+          this.state.endPage - 1,
+          this.state.endPage
+        ]
+      });
     } else if (page > 97) {
-      this.setState({ pages: [96, 97, 98, 99, 100] });
+      this.setState({
+        pages: [96, 97, 98, 99, 100]
+      });
     } else {
       this.setState(() => ({
         pages: arr
