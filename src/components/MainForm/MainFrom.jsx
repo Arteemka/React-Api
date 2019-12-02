@@ -19,7 +19,6 @@ class MainForm extends React.Component {
     favoritesItems: [],
     favoritesIsModal: false,
     page: 1,
-    currentPage: 1,
     endPage: null,
     pages: [1, 2, 3, 4, 5],
     pagination: false,
@@ -27,7 +26,7 @@ class MainForm extends React.Component {
   };
 
   gettingDate = () => {
-    this.setState(this.getDate);
+    this.setState({ page: 1, pages: [1, 2, 3, 4, 5] }, this.getDate);
   };
 
   changePagination = event => {
@@ -44,15 +43,22 @@ class MainForm extends React.Component {
     )
       .then(res => res.json())
       .then(date => {
+        if (date.response.total_pages > 100) {
+          this.setState({
+            endPage: 100
+          });
+        } else {
+          this.setState({
+            endPage: date.response.total_pages
+          });
+        }
         if (this.state.pagination) {
           this.setState({
-            list: date.response.listings,
-            endPage: date.response.total_pages
+            list: date.response.listings
           });
         } else {
           this.setState(prev => ({
-            list: [...prev.list, ...date.response.listings],
-            endPage: date.response.total_pages
+            list: [...prev.list, ...date.response.listings]
           }));
         }
       })
@@ -105,7 +111,7 @@ class MainForm extends React.Component {
 
     if (page < 5) {
       this.setState({ pages: [1, 2, 3, 4, 5] });
-    } else if (page > this.state.endPage) {
+    } else if (page > this.state.endPage - 3) {
       this.setState({
         pages: [
           this.state.endPage - 4,
@@ -114,10 +120,6 @@ class MainForm extends React.Component {
           this.state.endPage - 1,
           this.state.endPage
         ]
-      });
-    } else if (page > 97) {
-      this.setState({
-        pages: [96, 97, 98, 99, 100]
       });
     } else {
       this.setState(() => ({
