@@ -8,10 +8,6 @@ class Pagination extends React.Component {
   };
 
   componentDidUpdate(prevProps, nextProps) {
-    let mas = this.props.arrayPages;
-    let page = this.props.page;
-    let endPage = this.props.endPage;
-
     if (this.props.page === prevProps.page) return;
 
     if (this.props.page < 5) {
@@ -21,16 +17,18 @@ class Pagination extends React.Component {
         }),
         page: this.props.page
       }));
-    } else if (page > endPage - 3) {
+    } else if (this.props.page > this.props.endPage - 3) {
       this.setState({
-        filterPage: mas.filter(function(number) {
-          return number >= endPage - 4 && number <= endPage;
+        filterPage: this.props.arrayPages.filter(number => {
+          return (
+            number >= this.props.endPage - 4 && number <= this.props.endPage
+          );
         })
       });
     } else {
       this.setState({
-        filterPage: mas.filter(function(number) {
-          return number >= page - 2 && number <= page + 2;
+        filterPage: this.props.arrayPages.filter(number => {
+          return number >= this.props.page - 2 && number <= this.props.page + 2;
         })
       });
     }
