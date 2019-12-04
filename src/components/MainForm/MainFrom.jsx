@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
@@ -20,33 +21,37 @@ class MainForm extends React.Component {
     favoritesIsModal: false,
     page: 1,
     endPage: null,
-    pages: [1, 2, 3, 4, 5],
     pagination: false,
-    loadMore: false
+    loadMore: false,
+    arrayPages: null
   };
 
   gettingDate = () => {
-    this.setState({ page: 1, pages: [1, 2, 3, 4, 5] }, this.getDate);
+    this.setState(this.getDate(this.state.page));
   };
 
   changePagination = event => {
     if (event.target.id === "pagination-button") {
-      this.setState({ pagination: true, loadMore: false });
+      this.setState(() => ({
+        pagination: true,
+        loadMore: false,
+        arrayPages: _.range(1, this.state.endPage + 1)
+      }));
     } else if (event.target.id === "LoadMore-button") {
       this.setState({ loadMore: true, pagination: false });
     }
   };
 
-  getDate = page => {
+  getDate = pages => {
     fetch(
-      `https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=rent&page=${page}&place_name=${this.state.text}`
+      `https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=rent&page=${pages}&place_name=${this.state.text}`
     )
       .then(res => res.json())
       .then(date => {
         if (date.response.total_pages > 100) {
-          this.setState({
+          this.setState(() => ({
             endPage: 100
-          });
+          }));
         } else {
           this.setState({
             endPage: date.response.total_pages
@@ -63,6 +68,8 @@ class MainForm extends React.Component {
         }
       })
       .catch(error => this.setState({ error }));
+
+    this.setState({ page: pages });
   };
 
   onChange = event => {
@@ -104,30 +111,6 @@ class MainForm extends React.Component {
       prev => ({ page: prev.page + 1 }),
       () => this.getDate(this.state.page)
     );
-  };
-
-  setPage = page => {
-    let arr = this.state.pages;
-
-    if (page < 5) {
-      this.setState({ pages: [1, 2, 3, 4, 5] });
-    } else if (page > this.state.endPage - 3) {
-      this.setState({
-        pages: [
-          this.state.endPage - 4,
-          this.state.endPage - 3,
-          this.state.endPage - 2,
-          this.state.endPage - 1,
-          this.state.endPage
-        ]
-      });
-    } else {
-      this.setState(() => ({
-        pages: arr
-      }));
-      arr.splice(0, 5, page - 2, page - 1, page, page + 1, page + 2);
-    }
-    this.setState({ page: page }, () => this.getDate(this.state.page));
   };
 
   render() {
@@ -186,10 +169,10 @@ class MainForm extends React.Component {
         />
         {this.state.pagination && (
           <Pagination
+            getData={this.getDate}
             endPage={this.state.endPage}
-            setPage={this.setPage}
-            pages={this.state.pages}
             page={this.state.page}
+            arrayPages={this.state.arrayPages}
           />
         )}
         {this.state.loadMore && <LoadMore upPage={this.upPage} />}
