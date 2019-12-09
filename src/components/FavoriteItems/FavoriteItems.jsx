@@ -1,6 +1,6 @@
 import React from "react";
 
-const FavoritesItems = props => (
+const FavoriteItems = props => (
   <div className="modal_font">
     <span id="close_modal_box" onClick={props.onClose}>
       &#10007;
@@ -22,4 +22,4 @@ const FavoritesItems = props => (
   </div>
 );
 
-export default FavoritesItems;
+export default FavoriteItems;

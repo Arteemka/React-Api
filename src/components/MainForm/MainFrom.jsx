@@ -6,13 +6,14 @@ import Button from "../Button/Button";
 import Items from "../Items/Items";
 import Modal from "../Modal/Modal";
 import ToggledItem from "../ToggledItem/ToggledItem";
-import FavoritesItems from "../FavoritesItems/FavoritesItems";
+import FavoriteItems from "../FavoriteItems/FavoriteItems";
 import Pagination from "../Pagination/Pagination";
 import LoadMore from "../LoadMore/LoadMore";
 import box from "../../bask.jpg";
 
 export default class MainForm extends React.Component {
   state = {
+    text: "",
     isModalOpen: false,
     itemIndex: null,
     favoritesIsModalOpen: false,
@@ -21,8 +22,12 @@ export default class MainForm extends React.Component {
     arrayPages: null
   };
 
+  onChange = event => {
+    this.setState({ text: event.target.value });
+  };
+
   gettingDate = () => {
-    this.props.getData(this.props.page, this.props.text, "");
+    this.props.getData(this.props.page, this.state.text, "");
   };
 
   changePagination = event => {
@@ -48,23 +53,23 @@ export default class MainForm extends React.Component {
         }));
   };
 
-  addedInFovorites = (event, id) => {
+  addedInFovorite = (event, id) => {
     event.stopPropagation();
 
-    this.props.getFavorites([
-      ...this.props.itemsFavorites,
+    this.props.setFavorite([
+      ...this.props.itemsFavorite,
       this.props.items.find((item, index) => index === id)
     ]);
   };
 
   deleteItem = id => {
-    this.props.getFavorites(
-      this.props.itemsFavorites.filter((item, index) => index !== id)
+    this.props.setFavorite(
+      this.props.itemsFavorite.filter((item, index) => index !== id)
     );
   };
 
   upPage = () => {
-    this.props.getData(this.props.page + 1, this.props.text, "loadMore");
+    this.props.getData(this.props.page + 1, this.state.text, "loadMore");
     this.props.setPage(this.props.page + 1);
   };
 
@@ -72,7 +77,7 @@ export default class MainForm extends React.Component {
     if (this.props.error) {
       return (
         <div className="error">
-          <p>Сорри челбик, видно не судьба, видно не судьба. Ошибка сервера!</p>
+          <p>404!</p>
         </div>
       );
     }
@@ -84,8 +89,7 @@ export default class MainForm extends React.Component {
             placeholder="Find"
             type="text"
             className="input-find"
-            setFieldText={this.props.setFieldText}
-            text={this.props.text}
+            onChange={this.onChange}
           />
           <Button
             onClick={this.gettingDate}
@@ -119,15 +123,15 @@ export default class MainForm extends React.Component {
         )}
         {this.state.favoritesIsModalOpen && (
           <Modal>
-            <FavoritesItems
+            <FavoriteItems
               onClose={this.toggleModal}
-              items={this.props.itemsFavorites}
+              items={this.props.itemsFavorite}
               deleteItem={this.deleteItem}
             />
           </Modal>
         )}
         <Items
-          favorites={this.addedInFovorites}
+          favorites={this.addedInFovorite}
           onClick={this.toggleModal}
           items={this.props.items}
         />
@@ -137,7 +141,7 @@ export default class MainForm extends React.Component {
             endPage={this.props.endPage}
             page={this.props.page}
             arrayPages={this.state.arrayPages}
-            text={this.props.text}
+            text={this.state.text}
           />
         )}
         {this.state.loadMore && <LoadMore upPage={this.upPage} />}

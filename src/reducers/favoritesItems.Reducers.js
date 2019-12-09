@@ -1,15 +1,15 @@
-import { ITEMS_FAVORITES } from "../actions/favoritesItems";
+import { ITEMS_FAVORITE } from "../actions/favoriteItems";
 
 const defaultState = {
-  itemsFavorites: []
+  itemsFavorite: []
 };
 
-export const itemsFavorites = (state = defaultState, action) => {
+export const itemsFavorite = (state = defaultState, action) => {
   switch (action.type) {
-    case ITEMS_FAVORITES:
+    case ITEMS_FAVORITE:
       return {
         ...state,
-        itemsFavorites: action.payload
+        itemsFavorite: action.payload
       };
     default:
       return state;
