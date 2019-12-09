@@ -1,9 +1,9 @@
 import React from "react";
 
 const Items = props =>
-  props.list && (
+  props.items && (
     <div className="output-date">
-      {props.list.map((item, index) => (
+      {props.items.map((item, index) => (
         <div
           key={index}
           className="item"

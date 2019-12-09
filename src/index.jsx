@@ -1,13 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import './index.css';
-import MainForm from './components/MainForm/MainFrom';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
 
-const Api = () =><MainForm/> 
+import "./index.css";
+import store  from './store/configureStore';
+import MainFormContainer from "./containers/MainForm.container";
+import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<Api />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <MainFormContainer />
+  </Provider>,
+  document.getElementById("root")
+);
 
 serviceWorker.unregister();
