@@ -6,28 +6,28 @@ import Button from "../Button/Button";
 import Items from "../Items/Items";
 import Modal from "../Modal/Modal";
 import ToggledItem from "../ToggledItem/ToggledItem";
-import FavoritesItems from "../FavoritesItems/FavoritesItems";
+import FavoriteItems from "../FavoriteItems/FavoriteItems";
 import Pagination from "../Pagination/Pagination";
 import LoadMore from "../LoadMore/LoadMore";
 import box from "../../bask.jpg";
 
-class MainForm extends React.Component {
+export default class MainForm extends React.Component {
   state = {
     text: "",
-    list: [],
-    isModal: false,
+    isModalOpen: false,
     itemIndex: null,
-    favoritesItems: [],
-    favoritesIsModal: false,
-    page: 1,
-    endPage: null,
+    favoritesIsModalOpen: false,
     pagination: false,
     loadMore: false,
     arrayPages: null
   };
 
+  onChange = event => {
+    this.setState({ text: event.target.value });
+  };
+
   gettingDate = () => {
-    this.setState(this.getDate(this.state.page));
+    this.props.getData(this.props.page, this.state.text, "");
   };
 
   changePagination = event => {
@@ -35,85 +35,53 @@ class MainForm extends React.Component {
       this.setState(() => ({
         pagination: true,
         loadMore: false,
-        arrayPages: _.range(1, this.state.endPage + 1)
+        arrayPages: _.range(1, this.props.endPage + 1)
       }));
     } else if (event.target.id === "LoadMore-button") {
       this.setState({ loadMore: true, pagination: false });
     }
   };
 
-  getDate = pages => {
-    fetch(
-      `https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=rent&page=${pages}&place_name=${this.state.text}`
-    )
-      .then(res => res.json())
-      .then(date => {
-        if (date.response.total_pages > 100) {
-          this.setState(() => ({
-            endPage: 100
-          }));
-        } else {
-          this.setState({
-            endPage: date.response.total_pages
-          });
-        }
-        if (this.state.pagination) {
-          this.setState({
-            list: date.response.listings
-          });
-        } else {
-          this.setState(prev => ({
-            list: [...prev.list, ...date.response.listings]
-          }));
-        }
-      })
-      .catch(error => this.setState({ error }));
-
-    this.setState({ page: pages });
-  };
-
-  onChange = event => {
-    this.setState({ text: event.target.value });
-  };
-
   toggleModal = (event, indexId) => {
     event.target.id === "img_box" || event.target.id === "close_modal_box"
       ? this.setState(state => ({
-          favoritesIsModal: !state.favoritesIsModal
+          favoritesIsModalOpen: !state.favoritesIsModalOpen
         }))
       : this.setState(state => ({
-          isModal: !state.isModal,
-          itemIndex: this.state.list.find((item, index) => index === indexId)
+          isModalOpen: !state.isModalOpen,
+          itemIndex: this.props.items.find((item, index) => index === indexId)
         }));
   };
 
-  addedInFovorites = (event, id) => {
+  addedInFovorite = (event, id) => {
     event.stopPropagation();
 
-    this.setState(state => ({
-      favoritesItems: [
-        ...state.favoritesItems,
-        this.state.list.find((item, index) => index === id)
-      ]
-    }));
+    this.props.setFavorite([
+      ...this.props.itemsFavorite,
+      this.props.items.find((item, index) => index === id)
+    ]);
   };
 
   deleteItem = id => {
-    this.setState({
-      favoritesItems: this.state.favoritesItems.filter(
-        (item, index) => index !== id
-      )
-    });
-  };
-
-  upPage = () => {
-    this.setState(
-      prev => ({ page: prev.page + 1 }),
-      () => this.getDate(this.state.page)
+    this.props.setFavorite(
+      this.props.itemsFavorite.filter((item, index) => index !== id)
     );
   };
 
+  upPage = () => {
+    this.props.getData(this.props.page + 1, this.state.text, "loadMore");
+    this.props.setPage(this.props.page + 1);
+  };
+
   render() {
+    if (this.props.error) {
+      return (
+        <div className="error">
+          <p>404!</p>
+        </div>
+      );
+    }
+
     return (
       <div>
         <div className="block_find">
@@ -145,7 +113,7 @@ class MainForm extends React.Component {
             id="pagination-button"
           />
         </div>
-        {this.state.isModal && (
+        {this.state.isModalOpen && (
           <Modal>
             <ToggledItem
               onClose={this.toggleModal}
@@ -153,26 +121,27 @@ class MainForm extends React.Component {
             />
           </Modal>
         )}
-        {this.state.favoritesIsModal && (
+        {this.state.favoritesIsModalOpen && (
           <Modal>
-            <FavoritesItems
+            <FavoriteItems
               onClose={this.toggleModal}
-              items={this.state.favoritesItems}
+              items={this.props.itemsFavorite}
               deleteItem={this.deleteItem}
             />
           </Modal>
         )}
         <Items
-          favorites={this.addedInFovorites}
+          favorites={this.addedInFovorite}
           onClick={this.toggleModal}
-          list={this.state.list}
+          items={this.props.items}
         />
         {this.state.pagination && (
           <Pagination
-            getData={this.getDate}
-            endPage={this.state.endPage}
-            page={this.state.page}
+            getData={this.props.getData}
+            endPage={this.props.endPage}
+            page={this.props.page}
             arrayPages={this.state.arrayPages}
+            text={this.state.text}
           />
         )}
         {this.state.loadMore && <LoadMore upPage={this.upPage} />}
@@ -180,5 +149,3 @@ class MainForm extends React.Component {
     );
   }
 }
-
-export default MainForm;

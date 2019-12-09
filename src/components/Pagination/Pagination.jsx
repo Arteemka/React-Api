@@ -38,15 +38,37 @@ class Pagination extends React.Component {
     return (
       <ul className="pagination">
         <li>
-          <a onClick={() => this.props.getData(1)}>First</a>
+          <a
+            onClick={() => this.props.getData(1, this.props.text, "pagination")}
+          >
+            First
+          </a>
         </li>
         {this.state.filterPage.map((page, index) => (
           <li key={index} className={this.props.page === page ? "active" : ""}>
-            {<a onClick={() => this.props.getData(page)}>{page}</a>}
+            {
+              <a
+                onClick={() =>
+                  this.props.getData(page, this.props.text, "pagination")
+                }
+              >
+                {page}
+              </a>
+            }
           </li>
         ))}
         <li>
-          <a onClick={() => this.props.getData(this.props.endPage)}>Last</a>
+          <a
+            onClick={() =>
+              this.props.getData(
+                this.props.endPage,
+                this.props.text,
+                "pagination"
+              )
+            }
+          >
+            Last
+          </a>
         </li>
       </ul>
     );
