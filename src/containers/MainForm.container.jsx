@@ -13,12 +13,10 @@ const mapStateToProps = state => ({
   error: state.items.error
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getData: (page, name, bool) => dispatch(getData(page, name, bool)),
-    setFavorite: itemsFavorite => dispatch(setFavorite(itemsFavorite)),
-    setPage: page => dispatch(setPage(page))
-  };
+const mapDispatchToProps = {
+  getData,
+  setFavorite,
+  setPage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainForm);

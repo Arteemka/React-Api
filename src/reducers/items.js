@@ -1,10 +1,10 @@
 import { ITEMS_FETCH_DATA_SUCCESS, FETCH_DATA_ERROR } from "../actions/items";
 
-const defaultState = {
+const initialState = {
   items: []
 };
 
-export const items = (state = defaultState, action) => {
+export const items = (state = initialState, action) => {
   switch (action.type) {
     case ITEMS_FETCH_DATA_SUCCESS:
       return {

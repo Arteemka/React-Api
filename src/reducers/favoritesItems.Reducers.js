@@ -1,10 +1,10 @@
 import { ITEMS_FAVORITE } from "../actions/favoriteItems";
 
-const defaultState = {
+const initialState = {
   itemsFavorite: []
 };
 
-export const itemsFavorite = (state = defaultState, action) => {
+export const itemsFavorite = (state = initialState, action) => {
   switch (action.type) {
     case ITEMS_FAVORITE:
       return {
